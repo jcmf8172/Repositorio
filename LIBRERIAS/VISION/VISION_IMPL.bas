@@ -76,60 +76,37 @@
 ' ------------------------------------------------------------
 ' TRect.Contains
 ' ------------------------------------------------------------
-Function TRect.Contains(ByVal HitCol As Integer, ByVal HitRow As Integer) As Boolean
-    Return (HitCol >= This.Col And HitCol < This.Col + This.Width And _
-            HitRow >= This.Row And HitRow < This.Row + This.Height)
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.Intersects
 ' ------------------------------------------------------------
-Function TRect.Intersects(ByRef Other As TRect) As Boolean
-    Return (Not (This.Col + This.Width <= Other.Col Or _
-                 Other.Col + Other.Width <= This.Col Or _
-                 This.Row + This.Height <= Other.Row Or _
-                 Other.Row + Other.Height <= This.Row))
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.IsValid
 ' ------------------------------------------------------------
-Function TRect.IsValid() As Boolean
-    Return (This.Width > 0 And This.Height > 0)
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.IsEmpty
 ' ------------------------------------------------------------
-Function TRect.IsEmpty() As Boolean
-    Return (This.Width <= 0 Or This.Height <= 0)
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.Right
 ' ------------------------------------------------------------
-Function TRect.Right() As Integer
-    Return This.Col + This.Width
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.Bottom
 ' ------------------------------------------------------------
-Function TRect.Bottom() As Integer
-    Return This.Row + This.Height
-End Function
+
 
 ' ------------------------------------------------------------
 ' TRect.ClampToScreen
 ' ------------------------------------------------------------
-Sub TRect.ClampToScreen(ByVal ScreenW As Integer, ByVal ScreenH As Integer)
-    If This.Col < 0 Then This.Col = 0
-    If This.Row < 0 Then This.Row = 0
-    If This.Col + This.Width > ScreenW Then This.Width = ScreenW - This.Col
-    If This.Row + This.Height > ScreenH Then This.Height = ScreenH - This.Row
-    If This.Width < 0 Then This.Width = 0
-    If This.Height < 0 Then This.Height = 0
-End Sub
+
 
 ' ------------------------------------------------------------
 ' TTerm.TakeEsc

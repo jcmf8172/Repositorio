@@ -6,7 +6,7 @@
 
 ' === Dependencias CORE (incluidas directamente) ===
 #Include Once "CORE\TRGB\TRgb.Bi"
-#Include Once "CORE\TRECT\TRect.Bi"
+#Include Once "UI\TRECT\TRect.Bi"
 #Include Once "CORE\TCELL\TCell.Bi"
 #Include Once "CORE\TTerm\TTerm.Bi"
 
