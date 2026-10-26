@@ -6,4 +6,4 @@
 
 #Include Once "TERMINAL\TERMINAL.BI"
 
-#Include Once "VISION_IMPL.bas"
+
