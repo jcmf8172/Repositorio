@@ -1,4 +1,5 @@
-''' FICHERO: Term.Bi - Umbrella de TERMINAL (todo lo que funciona en la terminal)
+''' @file TERMINAL.BI
+''' @brief Umbrella de TERMINAL (todo lo que funciona en la terminal)
 ''' Generado automaticamente por segmentación
 
 #Include Once "windows.bi"
