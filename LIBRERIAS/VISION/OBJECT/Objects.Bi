@@ -1,9 +1,8 @@
 ''' @file Objects.Bi
-''' @brief Umbrella: tipos VISION.OBJECTS (ex VISION.DATAS).
+''' @brief Umbrella: tipos VISION.OBJECT
 ''' Generado automaticamente por segmentacion
-
-Namespace VISION
-	Namespace OBJECTS
+''' Namespace VISION
+''' Subnamespace OBJECT (tipos de datos)
 
 #Include Once "TObject.Bi"
 #Include Once "TValue.Bi"
@@ -22,5 +21,4 @@ Namespace VISION
 #Include Once "TSingle.Bi"
 #Include Once "TString.Bi"
 
-	End Namespace
 End Namespace
