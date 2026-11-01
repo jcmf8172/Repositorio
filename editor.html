@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUI Editor</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+    <div id="editor-container">
+        <div id="component-palette">
+            <h2>Components</h2>
+            <!-- Component list will be populated by script -->
+        </div>
+        <div id="desktop">
+            <!-- This is the canvas for the UI design -->
+        </div>
+        <div id="property-inspector">
+            <h2>Properties</h2>
+            <div id="prop-fields">
+                <!-- Properties for the selected component will be shown here -->
+            </div>
+            <div id="export-panel">
+                <button id="export-button">Export to JSON</button>
+                <textarea id="json-output" readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="dist/editor.js"></script>
+</body>
+</html>
