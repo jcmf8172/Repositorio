@@ -22,11 +22,8 @@
 ' TObject
 ' ------------------------------------------------------------------------------
 
-
 Type TObject Extends Object
-	Public:
 		Declare Constructor()
-		Declare Destructor()
 		Declare Virtual Property Name() As String
 		Declare Property Id() As String
 		Declare Virtual Property ToString() As String
@@ -40,9 +37,6 @@ End Function
 Constructor TObject()
 	Base()
 End Constructor
-
-Destructor TObject()
-End Destructor
 
 Property TObject.Id() As String
 	Return Hex(Cast(UInteger, @This))
@@ -60,7 +54,6 @@ End Property
 ' TValue
 ' ------------------------------------------------------------------------------
 
-
 Type TValue Extends TObject
 	Protected:
 		Declare Virtual Function GetValueText() As String
@@ -68,7 +61,6 @@ Type TValue Extends TObject
 
 	Public:
 		Declare Constructor()
-		Declare Destructor()
 		Declare Virtual Property Kind() As String
 		Declare Virtual Property IsDefault() As Boolean
 		Declare Virtual Property IsEmpty() As Boolean
@@ -79,9 +71,6 @@ End Type
 Constructor TValue()
 	Base()
 End Constructor
-
-Destructor TValue()
-End Destructor
 
 Function TValue.GetValueText() As String
 	Return "?"
@@ -104,7 +93,7 @@ Property TValue.Kind() As String
 End Property
 
 Sub TValue.Reset(ByVal DoReset As Boolean)
-	If DoReset = False Then Return
+	' La base no tiene estado propio que reiniciar
 End Sub
 
 Property TValue.ToString() As String
@@ -114,7 +103,6 @@ End Property
 ' ------------------------------------------------------------------------------
 ' TBoolean
 ' ------------------------------------------------------------------------------
-
 
 Type TBoolean Extends TValue
 	Protected:
@@ -126,7 +114,6 @@ Type TBoolean Extends TValue
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Boolean)
 		Declare Constructor(ByRef Source As Const TBoolean)
-		Declare Destructor()
 		Declare Property Value() As Boolean
 		Declare Operator Let(ByVal NewValue As Boolean)
 		Declare Property Inverted(ByVal DoInvert As Boolean) As Boolean
@@ -166,9 +153,6 @@ Constructor TBoolean(ByRef Source As Const TBoolean)
 	This.FValue = Source.FValue
 End Constructor
 
-Destructor TBoolean()
-End Destructor
-
 Function TBoolean.GetValueText() As String
 	If This.FValue Then Return "True"
 	Return "False"
@@ -204,8 +188,7 @@ Operator =(ByVal Lhs As Boolean, ByRef Rhs As TBoolean) As Boolean
 End Operator
 
 Sub TBoolean.Reset(ByVal DoReset As Boolean)
-	If DoReset = False Then Return
-	This.FValue = False
+	If DoReset Then This.FValue = False
 End Sub
 
 Property TBoolean.Value() As Boolean
@@ -216,7 +199,6 @@ End Property
 ' TByte
 ' ------------------------------------------------------------------------------
 
-
 Type TByte Extends TValue
 	Protected:
 		FValue As UByte
@@ -226,7 +208,6 @@ Type TByte Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As UByte)
-		Declare Destructor()
 		Declare Property Value() As UByte
 		Declare Operator Let(ByVal NewValue As UByte)
 		Declare Property MinValue() As UByte
@@ -255,9 +236,6 @@ Constructor TByte(ByVal NewValue As UByte)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TByte()
-End Destructor
 
 Function TByte.GetValueText() As String
 	Return Str(This.FValue)
@@ -307,7 +285,6 @@ End Property
 ' TSByte
 ' ------------------------------------------------------------------------------
 
-
 Type TSByte Extends TValue
 	Protected:
 		FValue As Byte
@@ -317,7 +294,6 @@ Type TSByte Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Byte)
-		Declare Destructor()
 		Declare Property Value() As Byte
 		Declare Property MinValue() As Byte
 		Declare Property MaxValue() As Byte
@@ -346,9 +322,6 @@ Constructor TSByte(ByVal NewValue As Byte)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TSByte()
-End Destructor
 
 Function TSByte.GetValueText() As String
 	Return Str(Cast(Short, This.FValue))
@@ -398,7 +371,6 @@ End Property
 ' TShort
 ' ------------------------------------------------------------------------------
 
-
 Type TShort Extends TValue
 	Protected:
 		FValue As Short
@@ -408,7 +380,6 @@ Type TShort Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Short)
-		Declare Destructor()
 		Declare Property Value() As Short
 		Declare Operator Let(ByVal NewValue As Short)
 		Declare Property MinValue() As Short
@@ -437,9 +408,6 @@ Constructor TShort(ByVal NewValue As Short)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TShort()
-End Destructor
 
 Function TShort.GetValueText() As String
 	Return Str(This.FValue)
@@ -489,7 +457,6 @@ End Property
 ' TUShort
 ' ------------------------------------------------------------------------------
 
-
 Type TUShort Extends TValue
 	Protected:
 		FValue As UShort
@@ -499,7 +466,6 @@ Type TUShort Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As UShort)
-		Declare Destructor()
 		Declare Property Value() As UShort
 		Declare Operator Let(ByVal NewValue As UShort)
 		Declare Property MinValue() As UShort
@@ -528,9 +494,6 @@ Constructor TUShort(ByVal NewValue As UShort)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TUShort()
-End Destructor
 
 Function TUShort.GetValueText() As String
 	Return Str(This.FValue)
@@ -580,7 +543,6 @@ End Property
 ' TInteger
 ' ------------------------------------------------------------------------------
 
-
 Type TInteger Extends TValue
 	Protected:
 		FValue As Long
@@ -590,7 +552,6 @@ Type TInteger Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Integer)
-		Declare Destructor()
 		Declare Property Value() As Integer
 		Declare Operator Let(ByVal NewValue As Integer)
 		Declare Property MinValue() As Integer
@@ -619,9 +580,6 @@ Constructor TInteger(ByVal NewValue As Integer)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TInteger()
-End Destructor
 
 Function TInteger.GetValueText() As String
 	Return Str(This.FValue)
@@ -671,7 +629,6 @@ End Property
 ' TUInteger
 ' ------------------------------------------------------------------------------
 
-
 Type TUInteger Extends TValue
 	Protected:
 		FValue As ULong
@@ -681,7 +638,6 @@ Type TUInteger Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As UInteger)
-		Declare Destructor()
 		Declare Property Value() As UInteger
 		Declare Operator Let(ByVal NewValue As UInteger)
 		Declare Property MinValue() As UInteger
@@ -710,9 +666,6 @@ Constructor TUInteger(ByVal NewValue As UInteger)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TUInteger()
-End Destructor
 
 Function TUInteger.GetValueText() As String
 	Return Str(This.FValue)
@@ -762,7 +715,6 @@ End Property
 ' TLong
 ' ------------------------------------------------------------------------------
 
-
 Type TLong Extends TValue
 	Protected:
 		FValue As Long
@@ -772,7 +724,6 @@ Type TLong Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Long)
-		Declare Destructor()
 		Declare Property Value() As Long
 		Declare Operator Let(ByVal NewValue As Long)
 		Declare Property MinValue() As Long
@@ -801,9 +752,6 @@ Constructor TLong(ByVal NewValue As Long)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TLong()
-End Destructor
 
 Function TLong.GetValueText() As String
 	Return Str(This.FValue)
@@ -853,7 +801,6 @@ End Property
 ' TULong
 ' ------------------------------------------------------------------------------
 
-
 Type TULong Extends TValue
 	Protected:
 		FValue As ULong
@@ -863,7 +810,6 @@ Type TULong Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As ULong)
-		Declare Destructor()
 		Declare Property Value() As ULong
 		Declare Operator Let(ByVal NewValue As ULong)
 		Declare Property MinValue() As ULong
@@ -892,9 +838,6 @@ Constructor TULong(ByVal NewValue As ULong)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TULong()
-End Destructor
 
 Function TULong.GetValueText() As String
 	Return Str(This.FValue)
@@ -944,7 +887,6 @@ End Property
 ' TLongInt
 ' ------------------------------------------------------------------------------
 
-
 Type TLongInt Extends TValue
 	Protected:
 		FValue As LongInt
@@ -954,7 +896,6 @@ Type TLongInt Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As LongInt)
-		Declare Destructor()
 		Declare Property Value() As LongInt
 		Declare Operator Let(ByVal NewValue As LongInt)
 		Declare Property MinValue() As LongInt
@@ -983,9 +924,6 @@ Constructor TLongInt(ByVal NewValue As LongInt)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TLongInt()
-End Destructor
 
 Function TLongInt.GetValueText() As String
 	Return Str(This.FValue)
@@ -1035,7 +973,6 @@ End Property
 ' TULongInt
 ' ------------------------------------------------------------------------------
 
-
 Type TULongInt Extends TValue
 	Protected:
 		FValue As ULongInt
@@ -1045,7 +982,6 @@ Type TULongInt Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As ULongInt)
-		Declare Destructor()
 		Declare Property Value() As ULongInt
 		Declare Operator Let(ByVal NewValue As ULongInt)
 		Declare Property MinValue() As ULongInt
@@ -1074,9 +1010,6 @@ Constructor TULongInt(ByVal NewValue As ULongInt)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TULongInt()
-End Destructor
 
 Function TULongInt.GetValueText() As String
 	Return Str(This.FValue)
@@ -1126,7 +1059,6 @@ End Property
 ' TSingle
 ' ------------------------------------------------------------------------------
 
-
 Type TSingle Extends TValue
 	Protected:
 		FValue As Single
@@ -1136,7 +1068,6 @@ Type TSingle Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Single)
-		Declare Destructor()
 		Declare Property Value() As Single
 		Declare Operator Let(ByVal NewValue As Single)
 		Declare Property MinValue() As Single
@@ -1168,9 +1099,6 @@ Constructor TSingle(ByVal NewValue As Single)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TSingle()
-End Destructor
 
 Function TSingle.GetValueText() As String
 	Return Str(This.FValue)
@@ -1232,7 +1160,6 @@ End Property
 ' TDouble
 ' ------------------------------------------------------------------------------
 
-
 Type TDouble Extends TValue
 	Protected:
 		FValue As Double
@@ -1242,7 +1169,6 @@ Type TDouble Extends TValue
 	Public:
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As Double)
-		Declare Destructor()
 		Declare Property Value() As Double
 		Declare Operator Let(ByVal NewValue As Double)
 		Declare Property MinValue() As Double
@@ -1274,9 +1200,6 @@ Constructor TDouble(ByVal NewValue As Double)
 	Base()
 	This.FValue = NewValue
 End Constructor
-
-Destructor TDouble()
-End Destructor
 
 Function TDouble.GetValueText() As String
 	Return Str(This.FValue)
@@ -1338,7 +1261,6 @@ End Property
 ' TString
 ' ------------------------------------------------------------------------------
 
-
 Type TString Extends TValue
 	Protected:
 		FValue As String
@@ -1349,7 +1271,6 @@ Type TString Extends TValue
 		Declare Constructor()
 		Declare Constructor(ByVal NewValue As String)
 		Declare Constructor(ByRef Source As Const TString)
-		Declare Destructor()
 		Declare Property Value() As String
 		Declare Operator Let(ByVal NewValue As String)
 		Declare Property Length() As Integer
@@ -1386,9 +1307,6 @@ Constructor TString(ByRef Source As Const TString)
 	Base()
 	This.FValue = Source.FValue
 End Constructor
-
-Destructor TString()
-End Destructor
 
 Function TString.GetValueText() As String
 	Return This.FValue
