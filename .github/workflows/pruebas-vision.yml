@@ -1,0 +1,71 @@
+name: pruebas-vision
+
+# Ejecuta tests/vision_test.bas (los 17 objetos de VISION) en Linux y Windows
+# en cada push.
+on:
+  push:
+
+jobs:
+  linux:
+    name: Linux (fbc 1.10.1)
+    runs-on: ubuntu-22.04
+    env:
+      FBC_VERSION: 1.10.1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar FreeBASIC
+        run: |
+          set -euo pipefail
+          # fbc 1.10.1 esta enlazado contra ncurses 5 (libtinfo5), que Ubuntu
+          # ya no incluye a partir de 23.04: por eso el runner es 22.04.
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libtinfo5 libncurses5
+
+          curl -fsSL -o /tmp/fbc.tar.gz \
+            "https://downloads.sourceforge.net/project/fbc/FreeBASIC-${FBC_VERSION}/Binaries-Linux/FreeBASIC-${FBC_VERSION}-linux-x86_64.tar.gz"
+          tar -xzf /tmp/fbc.tar.gz -C "$HOME"
+          echo "$HOME/FreeBASIC-${FBC_VERSION}-linux-x86_64/bin" >> "$GITHUB_PATH"
+
+      - name: Preparar ncurses 5 para el enlazador
+        run: |
+          set -euo pipefail
+          # Los paquetes de runtime solo traen libncurses.so.5 y libtinfo.so.5;
+          # fbc enlaza con -lncurses, que necesita el nombre sin version. Los
+          # enlaces se crean en el lib/ del propio fbc, que ya esta en su -L.
+          FBC_DIR="$HOME/FreeBASIC-${FBC_VERSION}-linux-x86_64"
+          LIBDIR="$("$FBC_DIR/bin/fbc" -print fblibdir | tr -d '\r\n')"
+          ln -sf "$(find /lib /usr/lib -name 'libncurses.so.5' | head -n1)" "$LIBDIR/libncurses.so"
+          ln -sf "$(find /lib /usr/lib -name 'libtinfo.so.5' | head -n1)" "$LIBDIR/libtinfo.so"
+          ls -l "$LIBDIR/libncurses.so" "$LIBDIR/libtinfo.so"
+
+      - name: Compilar y ejecutar la prueba
+        env:
+          # libfb.a referencia BC@@NCURSES_TINFO_5..., que ld solo resuelve si
+          # libtinfo se pasa explicitamente.
+          FBCFLAGS: -l tinfo
+        run: tests/compilar.sh
+
+  windows:
+    name: Windows (fbc 1.10.1)
+    runs-on: windows-latest
+    env:
+      FBC_VERSION: 1.10.1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar FreeBASIC
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $zip = Join-Path $env:RUNNER_TEMP 'fbc.zip'
+          $url = "https://downloads.sourceforge.net/project/fbc/FreeBASIC-$env:FBC_VERSION/Binaries-Windows/FreeBASIC-$env:FBC_VERSION-win64.zip"
+          Invoke-WebRequest -Uri $url -OutFile $zip
+          Expand-Archive -Path $zip -DestinationPath $env:RUNNER_TEMP -Force
+          $dir = Join-Path $env:RUNNER_TEMP "FreeBASIC-$env:FBC_VERSION-win64"
+          Add-Content -Path $env:GITHUB_PATH -Value $dir
+          & (Join-Path $dir 'fbc.exe') -version
+
+      - name: Compilar y ejecutar la prueba
+        shell: cmd
+        run: tests\compilar.bat
